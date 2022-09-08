@@ -46,10 +46,20 @@ def create(repo, project_type):
         'clear'
         ]
 
+    commands_go = [
+        ['mkdir',f'{new_directory}'],
+        ['touch',f'{new_directory}/{repo}.go'],
+        ['git', 'init',f'{new_directory}'],
+        ['code', f'{new_directory}/'],
+        'clear'
+        ]
+
     if project_type == 'py': 
         project_creator = [subprocess.run(command) for command in commands_py]
     elif project_type == 'wd': 
         project_creator = [subprocess.run(command) for command in commands_web_dev]
+    elif project_type == 'go': 
+        project_creator = [subprocess.run(command) for command in commands_go]
     subprocess.run('clear')
 
 
@@ -66,6 +76,10 @@ def py(name: str):
 @app.command()
 def wd(name: str):
     create(repo(name), project('wd'))
+
+@app.command()
+def go(name: str):
+    create(repo(name), project('go'))
 
 if __name__ == "__main__":
     app()
